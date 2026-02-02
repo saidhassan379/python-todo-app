@@ -1,56 +1,65 @@
 import json
+
 def load_tasks():
     global tasks
     try:
         with open("tasks.json", "r") as file:
             tasks = json.load(file)
     except:
-            tasks = []
+        tasks = []
+
 def save_tasks():
     with open("tasks.json", "w") as file:
         json.dump(tasks, file)
 
-tasks =[]
+tasks = []
 
 load_tasks()
+
 def show_menu():
     print("\n---TO DO LIST---")
     print("1. Add task")
     print("2. View tasks")
-    print("3. Compelete task")
+    print("3. Complete task")
     print("4. Delete task")
     print("5. Exit")
+
 while True:
     show_menu()
-    choice = input ("Choose an option: ")
+    choice = input("Choose an option: ")
+
     if choice == "1":
-        task= input("Enter task: ")
+        print("Add task selected")
+        task = input("Enter task: ")
         tasks.append({"title": task, "done": False})
         save_tasks()
-        print ("Task added!")
+        print("Task added!")
 
     elif choice == "2":
+        print("View tasks selected")
         if not tasks:
-            print ("No tasks available.")
+            print("No tasks available.")
         else:
             for i, task in enumerate(tasks):
-                status= "Done" if task["done"] else "pending" 
-                print (f"{i+1}. {task['title']} - {status}")    
-            
+                status = "Done" if task["done"] else "Pending"
+                print(f"{i+1}. {task['title']} - {status}")
+
     elif choice == "3":
-        number= int(input("Enter task number to complete: "))
-        tasks[number-1]["done"]= True
-        save_tasks()    
-        print("Task Completed! ")
+        print("Complete task selected")
+        number = int(input("Enter task number to complete: "))
+        tasks[number-1]["done"] = True
+        save_tasks()
+        print("Task Completed!")
+
     elif choice == "4":
-        number= int(input("Enter task number to delete: "))
+        print("Delete task selected")
+        number = int(input("Enter task number to delete: "))
         tasks.pop(number-1)
         save_tasks()
         print("Task deleted!")
+
     elif choice == "5":
         break
+
     else:
-        print ("Invalid choice. Please try again.")
-  
-    
-    
+        print("Invalid choice. Please try again.")
